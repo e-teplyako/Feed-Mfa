@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "29.0.0"
+    defaultConfig {
+        applicationId "misc.teplyakova.rssmfa"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/jdom-info.xml'
+        exclude 'org/jdom2/contrib/ids/doc-files/testIds.xml'
+        exclude 'org/jdom2/contrib/ids/README.txt'
+        exclude 'org/jdom2/contrib/input/README'
+        exclude 'org/jdom2/contrib/input/scanner/doc-files/test.xml'
+        exclude 'org/jdom2/contrib/output/README'
+        exclude 'org/jdom2/contrib/input/scanner/README.txt'
+        exclude 'org/jdom2/contrib/helpers/README'
+        exclude 'org/jdom2/contrib/beans/README'
+        exclude 'org/jdom2/contrib/ids/doc-files/testIds.dtd'
+        exclude 'org/jdom2/test/cases/special/TestIssue008.dtd'
+        exclude 'org/jdom2/test/Test.properties'
+        exclude 'org/jdom2/test/cases/special/TestIssue008.xml'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation group: 'com.rometools', name: 'rome-utils', version: '1.15.0'
+}
