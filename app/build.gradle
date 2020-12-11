@@ -16,33 +16,6 @@ android {
             minifyEnabled false
         }
     }
-    packagingOptions {
-        exclude 'META-INF/jdom-info.xml'
-        exclude 'org/jdom2/contrib/ids/doc-files/testIds.xml'
-        exclude 'org/jdom2/contrib/ids/README.txt'
-        exclude 'org/jdom2/contrib/input/README'
-        exclude 'org/jdom2/contrib/input/scanner/doc-files/test.xml'
-        exclude 'org/jdom2/contrib/output/README'
-        exclude 'org/jdom2/contrib/input/scanner/README.txt'
-        exclude 'org/jdom2/contrib/helpers/README'
-        exclude 'org/jdom2/contrib/beans/README'
-        exclude 'org/jdom2/contrib/ids/doc-files/testIds.dtd'
-        exclude 'org/jdom2/test/cases/special/TestIssue008.dtd'
-        exclude 'org/jdom2/test/Test.properties'
-        exclude 'org/jdom2/test/cases/special/TestIssue008.xml'
-        exclude 'stylesheet.css'
-        exclude 'allclasses-frame.html'
-        exclude'package-list'
-        exclude 'serialized-form.html'
-        exclude 'help-doc.html'
-        exclude 'constant-values.html'
-        exclude 'deprecated-list.html'
-        exclude 'allclasses-noframe.html'
-        exclude 'index.html'
-        exclude 'overview-summary.html'
-        exclude 'overview-frame.html'
-        exclude 'overview-tree.html'
-    }
 }
 
 dependencies {
