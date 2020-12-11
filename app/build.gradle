@@ -30,6 +30,18 @@ android {
         exclude 'org/jdom2/test/cases/special/TestIssue008.dtd'
         exclude 'org/jdom2/test/Test.properties'
         exclude 'org/jdom2/test/cases/special/TestIssue008.xml'
+        exclude 'stylesheet.css'
+        exclude 'allclasses-frame.html'
+        exclude'package-list'
+        exclude 'serialized-form.html'
+        exclude 'help-doc.html'
+        exclude 'constant-values.html'
+        exclude 'deprecated-list.html'
+        exclude 'allclasses-noframe.html'
+        exclude 'index.html'
+        exclude 'overview-summary.html'
+        exclude 'overview-frame.html'
+        exclude 'overview-tree.html'
     }
 }
 
@@ -39,4 +51,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     implementation group: 'com.rometools', name: 'rome-utils', version: '1.15.0'
+    implementation ('com.google.http-client:google-http-client-gson:1.19.0') {
+        exclude module: 'httpclient'
+        exclude module: 'commons-logging'
+    }
+    implementation 'cz.msebera.android:httpclient:4.5.8'
 }

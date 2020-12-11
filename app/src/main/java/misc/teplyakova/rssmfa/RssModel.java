@@ -7,13 +7,19 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndFeedImpl;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
+
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import cz.msebera.android.httpclient.client.methods.CloseableHttpResponse;
+import cz.msebera.android.httpclient.client.methods.HttpGet;
+import cz.msebera.android.httpclient.client.methods.HttpUriRequest;
+import cz.msebera.android.httpclient.impl.client.CloseableHttpClient;
+import cz.msebera.android.httpclient.impl.client.HttpClients;
 
 public class RssModel {
 	public RssModel() {
@@ -39,20 +45,19 @@ public class RssModel {
 			rssItems.add(rssItemT);
 
 			SyndFeed aggregatedFeed = new SyndFeedImpl();
-			aggregatedFeed.setFeedType("rss");
 			aggregatedFeed.setTitle("Aggregated feed");
 			List<SyndEntry> entries = new ArrayList();
 			aggregatedFeed.setEntries(entries);
 
 			try {
 				for (URL url : lists[0]) {
-					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-					if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-						InputStream is = conn.getInputStream();
-						SyndFeedInput input = new SyndFeedInput();
-						SyndFeed feed = input.build(new XmlReader(is));
-						entries.addAll(feed.getEntries());
-					}
+					CloseableHttpClient client = HttpClients.createMinimal();
+					HttpUriRequest request = new HttpGet(url.toURI());
+					CloseableHttpResponse response = client.execute(request);
+					InputStream is = response.getEntity().getContent();
+					SyndFeedInput input = new SyndFeedInput();
+					SyndFeed feed = input.build(new XmlReader(is));
+					entries.addAll(feed.getEntries());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
