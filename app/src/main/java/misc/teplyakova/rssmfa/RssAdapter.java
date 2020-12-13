@@ -30,7 +30,7 @@ public class RssAdapter extends ArrayAdapter<RssItem> {
 
 		TextView dateTextView = listItemView.findViewById(R.id.date);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
-		if (currentItem != null)
+		if (currentItem != null && currentItem.getPubDate() != null)
 			dateTextView.setText(dateFormat.format(currentItem.getPubDate()));
 
 		return listItemView;
