@@ -1,6 +1,15 @@
 {
 "BGR": "https://www.mfa.bg/en/rss",
+"BEL": "https://diplomatie.belgium.be/en/news/rss.xml",
 "CAN": "https://www.canada.ca/en/global-affairs.atom.xml",
-"PRK": "http://www.mfa.gov.kp/en/feed/",
-"FRA": "https://www.diplomatie.gouv.fr/spip.php?page=backend-fd&lang=en"
+"DNK": "https://um.dk//en/news/?p=2",
+"EST": "https://vm.ee/en/news/1/feed",
+"FIN": "https://um.fi/o/rss?dctype=asset&lang=en_US&aid=GRSnUwaHDPv5&plid=709049",
+"FRA": "https://www.diplomatie.gouv.fr/spip.php?page=backend-fd&lang=en",
+"DEU": "https://www.auswaertiges-amt.de/static/appdata/includes/rss_en/RSS_Pressemitteilungen_Reden.xml",
+"ISL": "https://www.government.is/extensions/news/rss/Ministry-for-Foreign-Affairs.rss",
+"IND": "https://www.mea.gov.in/Portal/XML/News_1.xml",
+"ISR": "https://mfa.gov.il/mfa/PressRoom/2020/Pages/Rss.aspx",
+"ITA": "https://www.esteri.it/mae/en/header_footer/feed-news.html",
+"PRK": "http://www.mfa.gov.kp/en/feed/"
 }

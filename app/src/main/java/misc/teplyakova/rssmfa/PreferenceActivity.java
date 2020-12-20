@@ -1,11 +1,14 @@
 package misc.teplyakova.rssmfa;
-
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreference;
+import java.util.Map;
 
 public class PreferenceActivity extends AppCompatActivity {
 
@@ -35,9 +38,31 @@ public class PreferenceActivity extends AppCompatActivity {
 	}
 
 	public static class SettingsFragment extends PreferenceFragmentCompat {
+		public final static String PREFERENCES_COUNTRIES_URLS = "pref_countries_urls";
+		public final static String PREFERENCES_COUNTRIES_SUBS = "pref_countries_subs";
+
+		@Override
+		public void onCreate(@Nullable Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+		}
+
 		@Override
 		public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+			getPreferenceManager().setSharedPreferencesName(PREFERENCES_COUNTRIES_SUBS);
 			setPreferencesFromResource(R.xml.preferences, rootKey);
+			populateList((PreferenceCategory) findPreference("countries"));
+		}
+
+		private void populateList(PreferenceCategory parent) {
+			SharedPreferences prefs = getActivity().getSharedPreferences(PREFERENCES_COUNTRIES_SUBS, 0);
+			for (String key : prefs.getAll().keySet()) {
+				SwitchPreference switchPreference = new SwitchPreference(this.getContext());
+				switchPreference.setKey(key);
+				switchPreference.setChecked(prefs.getBoolean(key, false));
+				int stringId = getResources().getIdentifier(key, "string", getActivity().getPackageName());
+				switchPreference.setTitle(getResources().getString(stringId));
+				parent.addPreference(switchPreference);
+			}
 		}
 	}
 }

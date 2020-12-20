@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <SwitchPreference
-        android:key="DPRK"
-        android:title="@string/DPRK"/>
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="France"
-        android:title="@string/France" />
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="USA"
-        android:title="@string/USA" />
+    <PreferenceCategory
+        android:key="countries"
+        android:title="Subscriptions"
+        android:summary="Manage subscriptions"/>
 </PreferenceScreen>

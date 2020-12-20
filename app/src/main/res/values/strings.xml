@@ -1,9 +1,19 @@
 <resources>
     <string name="app_name">RssMFA</string>
     <!-- Country names -->
-    <string name="USA">United States of America</string>
-    <string name="DPRK">Democratic People\'s Republic Korea </string>
-    <string name="France">France</string>
+    <string name="BGR">Bulgaria</string>
+    <string name="BEL">Belgium</string>
+    <string name="CAN">Canada</string>
+    <string name="DNK">Denmark</string>
+    <string name="EST">Estonia</string>
+    <string name="FIN">Finland</string>
+    <string name="FRA">France</string>
+    <string name="DEU">Germany</string>
+    <string name="ISL">Iceland</string>
+    <string name="IND">India</string>
+    <string name="ISR">Israel</string>
+    <string name="ITA">Italy</string>
+    <string name="PRK">North Korea</string>
 
     <!-- Preference Titles -->
     <string name="title_activity_preference">Settings</string>
