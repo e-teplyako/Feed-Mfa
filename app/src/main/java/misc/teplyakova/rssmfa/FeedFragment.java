@@ -33,7 +33,7 @@ public class FeedFragment extends Fragment {
 
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		adapter = new FeedAdapter(items);
+		adapter = new FeedAdapter((MainActivity) getActivity(), items);
 		rv.setAdapter(adapter);
 		RecyclerView.LayoutManager layoutManager =
 				new LinearLayoutManager(getActivity());
