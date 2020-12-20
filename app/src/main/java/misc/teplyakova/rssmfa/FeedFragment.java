@@ -1,43 +1,48 @@
 package misc.teplyakova.rssmfa;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.ListFragment;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class FeedFragment extends ListFragment {
-	private ArrayAdapter aa = null;
+public class FeedFragment extends Fragment {
+	private RecyclerView rv;
+	private FeedAdapter adapter;
 	private ArrayList<RssItem> items;
 
 	public FeedFragment(ArrayList<RssItem> items) {
 		this.items = items;
 	}
 
+	@Nullable
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.feed, container, false);
+		rv = view.findViewById(R.id.recycler_view);
+		return view;
+	}
+
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		aa = new RssAdapter(getActivity(), new ArrayList<RssItem>());
-		setListAdapter(aa);
+		adapter = new FeedAdapter(items);
+		rv.setAdapter(adapter);
+		RecyclerView.LayoutManager layoutManager =
+				new LinearLayoutManager(getActivity());
+		rv.setLayoutManager(layoutManager);
+		rv.setHasFixedSize(true);
 		showFeed(items);
 	}
 
-	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-		MainActivity activity = (MainActivity) getActivity();
-		if (activity != null)
-			activity.itemClicked(items.get(position));
-	}
-
 	private void showFeed(ArrayList<RssItem> items) {
-		aa.clear();
-		aa.addAll(items);
-		aa.notifyDataSetChanged();
+		adapter.notifyDataSetChanged();
 	}
 }
