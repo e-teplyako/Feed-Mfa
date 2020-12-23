@@ -29,8 +29,9 @@ public class RssItem implements Comparable<RssItem> {
 		return this.description;
 	}
 
-	public Date getPubDate()
-	{
+	public Date getPubDate() {
+		if (pubDate == null)
+			return new Date();
 		return this.pubDate;
 	}
 

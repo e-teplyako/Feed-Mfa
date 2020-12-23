@@ -1,13 +1,10 @@
 package misc.teplyakova.rssmfa;
 
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,11 +14,11 @@ import java.util.ArrayList;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.RowHolder> {
 	private ArrayList<RssItem> items;
-	private MainActivity activity;
+	private ItemClickListener listener;
 
-	public FeedAdapter(MainActivity activity, ArrayList<RssItem> items) {
+	public FeedAdapter(ItemClickListener listener, ArrayList<RssItem> items) {
 		this.items = items;
-		this.activity = activity;
+		this.listener = listener;
 	}
 
 	@NonNull
@@ -40,7 +37,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.RowHolder> {
 		return(items.size());
 	}
 
-	class RowHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+	public interface ItemClickListener {
+		void itemClicked(RssItem item);
+	}
+
+	class RowHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 		TextView headline;
 		TextView date;
 		ImageView flag;
@@ -61,8 +62,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.RowHolder> {
 
 		@Override
 		public void onClick(View v) {
-			if (activity != null)
-				activity.itemClicked(items.get(getAdapterPosition()));
+			if (listener != null)
+				listener.itemClicked(items.get(getAdapterPosition()));
 		}
 	}
 }

@@ -40,7 +40,7 @@ public class RssModel {
 		@Override
 		protected ArrayList<RssItem> doInBackground(Set<URL>... lists) {
 			ArrayList<RssItem> rssItems = new ArrayList<>();
-			RssItem rssItemT = new RssItem("Test item", "Just to test.",
+			RssItem rssItemT = new RssItem("Test item", "Just to activity_main.",
 					new Date(), "http://msug.vn.ua/");
 			rssItems.add(rssItemT);
 

@@ -9,22 +9,27 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, FeedAdapter.ItemClickListener {
 	RssPresenter presenter;
+	ProgressBar progressBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		progressBar = findViewById(R.id.progressBar);
 		getSupportFragmentManager().addOnBackStackChangedListener(this);
 		shouldDisplayHomeUp();
 		init();
 	}
 
 	public void showFeed(ArrayList<RssItem> items) {
-		FeedFragment fragment = new FeedFragment(items);
+		FeedFragment fragment = new FeedFragment(items, this);
 		getSupportFragmentManager().beginTransaction()
 				.replace(android.R.id.content,
 						fragment).commit();
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 						fragment).commit();
 	}
 
+	@Override
 	public void itemClicked(RssItem item) {
 		showDetail(item);
 	}
@@ -90,5 +96,13 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 	public boolean onSupportNavigateUp() {
 		getSupportFragmentManager().popBackStack();
 		return true;
+	}
+
+	public void showProgressBar() {
+		progressBar.setVisibility(View.VISIBLE);
+	}
+
+	public void hideProgressBar() {
+		progressBar.setVisibility(View.GONE);
 	}
 }

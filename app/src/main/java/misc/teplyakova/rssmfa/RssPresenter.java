@@ -62,6 +62,11 @@ public class RssPresenter {
 	}
 
 	class RetreivePreferencesTask extends AsyncTask<Void, Void, Set<URL>> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			view.showProgressBar();
+		}
 
 		@Override
 		protected Set<URL> doInBackground(Void... voids) {
@@ -85,6 +90,7 @@ public class RssPresenter {
 			model.loadFeed(urls, new RssModel.LoadFeedCallback() {
 				@Override
 				public void onLoad(ArrayList<RssItem> items) {
+					view.hideProgressBar();
 					view.showFeed(items);
 				}
 			});
