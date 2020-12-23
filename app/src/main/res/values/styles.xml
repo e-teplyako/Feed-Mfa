@@ -6,6 +6,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@color/colorBackground</item>
+        <item name="actionBarTheme">@style/MyActionBar</item>
+        <item name="titleTextColor">@android:color/white</item>
     </style>
 
+    <style name="MyActionBar" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="ListItem">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/futura</item>
+    </style>
 </resources>
