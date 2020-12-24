@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -91,6 +92,7 @@ public class RssPresenter {
 			model.loadFeed(urls, new RssModel.LoadFeedCallback() {
 				@Override
 				public void onLoad(ArrayList<RssItem> items) {
+					Collections.sort(items);
 					view.hideProgressBar();
 					view.showFeed(items);
 				}
