@@ -39,6 +39,6 @@ public class RssItem implements Comparable<RssItem> {
 	}
 
 	public int compareTo(RssItem o) {
-		return this.pubDate.compareTo(o.pubDate) * -1;
+		return this.getPubDate().compareTo(o.getPubDate()) * -1;
 	}
 }
