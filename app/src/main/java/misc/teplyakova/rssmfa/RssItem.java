@@ -2,30 +2,33 @@ package misc.teplyakova.rssmfa;
 import java.util.Date;
 
 public class RssItem implements Comparable<RssItem> {
+	private String countryCode;
 	private String title;
 	private String description;
 	private Date pubDate;
 	private String link;
 
-	public RssItem(String title, String description, Date pubDate, String link) {
+	public RssItem(String countryCode, String title, String description, Date pubDate, String link) {
+		this.countryCode = countryCode;
 		this.title = title;
 		this.description = description;
 		this.pubDate = pubDate;
 		this.link = link;
 	}
 
-	public String getTitle()
-	{
+	public String getCountryCode() {
+		return this.countryCode;
+	}
+
+	public String getTitle() {
 		return this.title;
 	}
 
-	public String getLink()
-	{
+	public String getLink()	{
 		return this.link;
 	}
 
-	public String getDescription()
-	{
+	public String getDescription() {
 		return this.description;
 	}
 

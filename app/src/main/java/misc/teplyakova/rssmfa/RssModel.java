@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -26,11 +27,11 @@ public class RssModel {
 
 	}
 
-	public void loadFeed(Set<URL> urls, LoadFeedCallback callback){
-		new LoadFeedTask(callback).execute(urls);
+	public void loadFeed(HashMap<URL, String> urlToCountryCode, LoadFeedCallback callback){
+		new LoadFeedTask(callback).execute(urlToCountryCode);
 	}
 
-	class LoadFeedTask extends AsyncTask<Set<URL>, Void, ArrayList<RssItem>> {
+	class LoadFeedTask extends AsyncTask<HashMap<URL, String>, Void, ArrayList<RssItem>> {
 		private final LoadFeedCallback callback;
 
 		LoadFeedTask(LoadFeedCallback callback) {
@@ -38,33 +39,28 @@ public class RssModel {
 		}
 
 		@Override
-		protected ArrayList<RssItem> doInBackground(Set<URL>... lists) {
+		protected ArrayList<RssItem> doInBackground(HashMap<URL, String>... lists) {
 			ArrayList<RssItem> rssItems = new ArrayList<>();
-			RssItem rssItemT = new RssItem("Test item", "Just to activity_main.",
-					new Date(), "http://msug.vn.ua/");
-			rssItems.add(rssItemT);
-
 			SyndFeed aggregatedFeed = new SyndFeedImpl();
 			aggregatedFeed.setTitle("Aggregated feed");
 			List<SyndEntry> entries = new ArrayList();
 			aggregatedFeed.setEntries(entries);
 
 			try {
-				for (URL url : lists[0]) {
+				for (URL url : lists[0].keySet()) {
 					CloseableHttpClient client = HttpClients.createMinimal();
 					HttpUriRequest request = new HttpGet(url.toURI());
 					CloseableHttpResponse response = client.execute(request);
 					InputStream is = response.getEntity().getContent();
 					SyndFeedInput input = new SyndFeedInput();
 					SyndFeed feed = input.build(new XmlReader(is));
-					entries.addAll(feed.getEntries());
+					for (SyndEntry entry : feed.getEntries()) {
+						RssItem item = new RssItem(lists[0].get(url), entry.getTitle(), entry.getDescription().getValue(), entry.getPublishedDate(), entry.getLink());
+						rssItems.add(item);
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
-			for (SyndEntry entry : aggregatedFeed.getEntries()) {
-				RssItem item = new RssItem(entry.getTitle(), entry.getDescription().getValue(), entry.getPublishedDate(), entry.getLink());
-				rssItems.add(item);
 			}
 			return rssItems;
 		}

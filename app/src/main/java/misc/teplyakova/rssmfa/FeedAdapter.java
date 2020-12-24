@@ -11,14 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.RowHolder> {
 	private ArrayList<RssItem> items;
 	private ItemClickListener listener;
+	private HashMap<String, Integer> imageResources;
 
 	public FeedAdapter(ItemClickListener listener, ArrayList<RssItem> items) {
 		this.items = items;
 		this.listener = listener;
+		initImageResources();
 	}
 
 	@NonNull
@@ -35,6 +38,25 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.RowHolder> {
 	@Override
 	public int getItemCount() {
 		return(items.size());
+	}
+
+	private void initImageResources() {
+		imageResources = new HashMap<>();
+		imageResources.put("BEL", R.drawable.bel);
+		imageResources.put("BGR", R.drawable.bgr);
+		imageResources.put("CAN", R.drawable.can);
+		imageResources.put("COL", R.drawable.col);
+		imageResources.put("DEU", R.drawable.deu);
+		imageResources.put("DNK", R.drawable.dnk);
+		imageResources.put("EST", R.drawable.est);
+		imageResources.put("FIN", R.drawable.fin);
+		imageResources.put("FRA", R.drawable.fra);
+		imageResources.put("IND", R.drawable.ind);
+		imageResources.put("ISL", R.drawable.isl);
+		imageResources.put("ISR", R.drawable.isr);
+		imageResources.put("ITA", R.drawable.ita);
+		imageResources.put("KAZ", R.drawable.kaz);
+		imageResources.put("PRK", R.drawable.ic_settings_applications_24dp);
 	}
 
 	public interface ItemClickListener {
@@ -58,6 +80,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.RowHolder> {
 			headline.setText(item.getTitle());
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
 			date.setText(dateFormat.format(item.getPubDate()));
+			String code = item.getCountryCode();
+			if (imageResources.containsKey(code))
+				flag.setImageResource(imageResources.get(code));
 		}
 
 		@Override

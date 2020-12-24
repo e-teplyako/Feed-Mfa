@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -61,7 +62,7 @@ public class RssPresenter {
 		prefsUrls.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).apply();
 	}
 
-	class RetreivePreferencesTask extends AsyncTask<Void, Void, Set<URL>> {
+	class RetreivePreferencesTask extends AsyncTask<Void, Void, HashMap<URL, String>> {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -69,14 +70,14 @@ public class RssPresenter {
 		}
 
 		@Override
-		protected Set<URL> doInBackground(Void... voids) {
-			Set<URL> urls = new HashSet<>();
+		protected HashMap<URL, String> doInBackground(Void... voids) {
+			HashMap urls = new HashMap();
 			SharedPreferences prefsUrls = view.getSharedPreferences(PreferenceActivity.SettingsFragment.PREFERENCES_COUNTRIES_URLS, 0);
 			SharedPreferences prefsSubs = view.getSharedPreferences(PreferenceActivity.SettingsFragment.PREFERENCES_COUNTRIES_SUBS, 0);
 			try {
 				for (Map.Entry<String, ?> entry : prefsUrls.getAll().entrySet()) {
 					if (prefsSubs.getBoolean(entry.getKey(), false))
-						urls.add(new URL(prefsUrls.getString(entry.getKey(), "")));
+						urls.put(new URL(prefsUrls.getString(entry.getKey(), "")), entry.getKey());
 				}
 			}
 			catch (Exception e) {
@@ -86,7 +87,7 @@ public class RssPresenter {
 		}
 
 		@Override
-		protected void onPostExecute(Set<URL> urls) {
+		protected void onPostExecute(HashMap<URL, String> urls) {
 			model.loadFeed(urls, new RssModel.LoadFeedCallback() {
 				@Override
 				public void onLoad(ArrayList<RssItem> items) {
