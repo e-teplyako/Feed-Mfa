@@ -2,7 +2,10 @@ package misc.teplyakova.rssmfa;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.text.SimpleDateFormat;
+
 public class DetailFragment extends Fragment {
 	private RssItem item;
 	private TextView headline;
-	private WebView webView;
-	private Button openLink;
+	private TextView date;
 	private TextView description;
+	private Button openLink;
 
 	public DetailFragment(RssItem item) {
 		this.item = item;
@@ -30,9 +35,9 @@ public class DetailFragment extends Fragment {
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View result = inflater.inflate(R.layout.activity_detail, container, false);
 		headline = result.findViewById(R.id.headline);
-		webView = result.findViewById(R.id.webview);
-		openLink = result.findViewById(R.id.open_link);
+		date = result.findViewById(R.id.date);
 		description = result.findViewById(R.id.description);
+		openLink = result.findViewById(R.id.open_link);
 		return result;
 	}
 
@@ -40,8 +45,11 @@ public class DetailFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		headline.setText(item.getTitle());
-		webView.loadData(item.getDescription(), "text/html", null);
-		description.setText(item.getDescription());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+		date.setText(dateFormat.format(item.getPubDate()));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+			description.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+		description.setText(Html.fromHtml(item.getDescription()));
 		openLink.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
