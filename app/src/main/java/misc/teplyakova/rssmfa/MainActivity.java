@@ -3,6 +3,7 @@ package misc.teplyakova.rssmfa;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, FeedAdapter.ItemClickListener {
+public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, FeedAdapter.ItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 	RssPresenter presenter;
 	ProgressBar progressBar;
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 	}
 
 	public void showFeed(ArrayList<RssItem> items) {
-		FeedFragment fragment = new FeedFragment(items, this);
+		FeedFragment fragment = new FeedFragment(items, this, this);
 		getSupportFragmentManager().beginTransaction()
 				.replace(android.R.id.content,
 						fragment).commit();
@@ -104,5 +105,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
 	public void hideProgressBar() {
 		progressBar.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void onRefresh() {
+		presenter.viewIsReady();
 	}
 }
