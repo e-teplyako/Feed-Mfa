@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.text.SimpleDateFormat;
 
 public class DetailFragment extends Fragment {
@@ -24,7 +26,7 @@ public class DetailFragment extends Fragment {
 	private TextView headline;
 	private TextView date;
 	private TextView description;
-	private Button openLink;
+	private FloatingActionButton openLink;
 
 	public DetailFragment(RssItem item) {
 		this.item = item;
