@@ -39,12 +39,9 @@ public class RssPresenter {
 		loadFeed();
 	}
 
-	public void viewIsGoingToBeRecreated(boolean isInFeedMode) {
-
-	}
-
-	public void viewHasBeenRecreated() {
-
+	public void viewHasBeenRecreated(boolean isInFeedMode) {
+		if (isInFeedMode)
+			view.showFeed(RssModel.getInstance().getItems());
 	}
 
 	private void loadFeed() {

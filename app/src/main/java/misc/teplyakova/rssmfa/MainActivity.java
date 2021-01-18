@@ -1,5 +1,6 @@
 package misc.teplyakova.rssmfa;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -17,6 +18,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, FeedAdapter.ItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 	ProgressBar progressBar;
+	private final String FEED_FRAGMENT_ID = "feed_fragment_id";
+	private final String DETAIL_FRAGMENT_ID = "detail_fragment_id";
+	private final String SS_FEED_MODE = "ss_feed_mode";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,21 +30,34 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 		getSupportFragmentManager().addOnBackStackChangedListener(this);
 		shouldDisplayHomeUp();
 		RssPresenter.getInstance().attachView(this);
-		init();
+		if (savedInstanceState == null)
+			RssPresenter.getInstance().viewIsReady();
+		else {
+			RssPresenter.getInstance().viewHasBeenRecreated(savedInstanceState.getBoolean(SS_FEED_MODE, true));
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(@NonNull Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_ID) == null)
+			outState.putBoolean(SS_FEED_MODE, true);
+		else
+			outState.putBoolean(SS_FEED_MODE, false);
 	}
 
 	public void showFeed(ArrayList<RssItem> items) {
 		FeedFragment fragment = new FeedFragment(items, this, this);
 		getSupportFragmentManager().beginTransaction()
 				.replace(android.R.id.content,
-						fragment).commit();
+						fragment, FEED_FRAGMENT_ID).commit();
 	}
 
 	private void showDetail(RssItem item) {
 		DetailFragment fragment = new DetailFragment(item);
 		getSupportFragmentManager().beginTransaction().addToBackStack(null)
 				.replace(android.R.id.content,
-						fragment).commit();
+						fragment, DETAIL_FRAGMENT_ID).commit();
 	}
 
 	@Override
@@ -53,11 +70,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 		ActionBar ab = getSupportActionBar();
 		if (ab != null)
 			getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
-	}
-
-
-	private void init() {
-		RssPresenter.getInstance().viewIsReady();
 	}
 
 	@Override

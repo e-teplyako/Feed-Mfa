@@ -37,6 +37,7 @@ public class DetailFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		setRetainInstance(true);
 		View result = inflater.inflate(R.layout.activity_detail, container, false);
 		headline = result.findViewById(R.id.headline);
 		date = result.findViewById(R.id.date);
