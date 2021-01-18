@@ -23,12 +23,25 @@ import cz.msebera.android.httpclient.impl.client.CloseableHttpClient;
 import cz.msebera.android.httpclient.impl.client.HttpClients;
 
 public class RssModel {
-	public RssModel() {
+	private static RssModel instance;
+	private ArrayList<RssItem> items;
 
+	private RssModel() {
+
+	}
+
+	public static RssModel getInstance() {
+		if (instance == null)
+			instance = new RssModel();
+		return instance;
 	}
 
 	public void loadFeed(HashMap<URL, String> urlToCountryCode, LoadFeedCallback callback){
 		new LoadFeedTask(callback).execute(urlToCountryCode);
+	}
+
+	public ArrayList<RssItem> getItems() {
+		return items;
 	}
 
 	class LoadFeedTask extends AsyncTask<HashMap<URL, String>, Void, ArrayList<RssItem>> {
@@ -71,6 +84,7 @@ public class RssModel {
 						rssItems.add(item);
 					}
 				}
+			items = rssItems;
 			return rssItems;
 		}
 

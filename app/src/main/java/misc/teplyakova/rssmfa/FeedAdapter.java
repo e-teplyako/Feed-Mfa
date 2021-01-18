@@ -37,7 +37,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.RowHolder> {
 
 	@Override
 	public int getItemCount() {
-		return(items.size());
+		return (items == null) ? 0 : items.size();
 	}
 
 	private void initImageResources() {

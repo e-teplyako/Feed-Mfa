@@ -9,8 +9,6 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +25,10 @@ public class DetailFragment extends Fragment {
 	private TextView date;
 	private TextView description;
 	private FloatingActionButton openLink;
+
+	public DetailFragment() {
+
+	}
 
 	public DetailFragment(RssItem item) {
 		this.item = item;
@@ -46,6 +48,8 @@ public class DetailFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		if (item == null)
+			return;
 		headline.setText(item.getTitle());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
 		date.setText(dateFormat.format(item.getPubDate()));

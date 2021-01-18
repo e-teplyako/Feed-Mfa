@@ -2,7 +2,6 @@ package misc.teplyakova.rssmfa;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,13 +10,19 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class RssPresenter {
+	private static RssPresenter instance;
 	private final String PREFERENCES_MISC = "pref_miscellaneous";
 	private final String PREF_VERSION_CODE_KEY = "version_code";
 	private MainActivity view;
-	private final RssModel model;
 
-	public RssPresenter(RssModel model) {
-		this.model = model;
+	private RssPresenter() {
+
+	}
+
+	public static RssPresenter getInstance() {
+		if (instance == null)
+			instance = new RssPresenter();
+		return instance;
 	}
 
 	public void attachView(MainActivity view) {
@@ -32,6 +37,14 @@ public class RssPresenter {
 		if (checkFirstRun())
 			initFirstTime();
 		loadFeed();
+	}
+
+	public void viewIsGoingToBeRecreated(boolean isInFeedMode) {
+
+	}
+
+	public void viewHasBeenRecreated() {
+
 	}
 
 	private void loadFeed() {
@@ -86,7 +99,7 @@ public class RssPresenter {
 
 		@Override
 		protected void onPostExecute(HashMap<URL, String> urls) {
-			model.loadFeed(urls, new RssModel.LoadFeedCallback() {
+			RssModel.getInstance().loadFeed(urls, new RssModel.LoadFeedCallback() {
 				@Override
 				public void onLoad(ArrayList<RssItem> items) {
 					Collections.sort(items);

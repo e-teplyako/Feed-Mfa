@@ -16,7 +16,6 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, FeedAdapter.ItemClickListener, SwipeRefreshLayout.OnRefreshListener {
-	RssPresenter presenter;
 	ProgressBar progressBar;
 
 	@Override
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 		progressBar = findViewById(R.id.progressBar);
 		getSupportFragmentManager().addOnBackStackChangedListener(this);
 		shouldDisplayHomeUp();
+		RssPresenter.getInstance().attachView(this);
 		init();
 	}
 
@@ -57,10 +57,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
 
 	private void init() {
-		RssModel model = new RssModel();
-		presenter = new RssPresenter(model);
-		presenter.attachView(this);
-		presenter.viewIsReady();
+		RssPresenter.getInstance().viewIsReady();
 	}
 
 	@Override
@@ -85,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		presenter.detachView();
+		RssPresenter.getInstance().detachView();
 	}
 
 	@Override
@@ -109,6 +106,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
 	@Override
 	public void onRefresh() {
-		presenter.viewIsReady();
+		RssPresenter.getInstance().viewIsReady();
 	}
 }

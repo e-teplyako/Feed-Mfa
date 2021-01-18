@@ -22,6 +22,10 @@ public class FeedFragment extends Fragment {
 	private SwipeRefreshLayout.OnRefreshListener refreshListener;
 	private SwipeRefreshLayout swipeRefreshLayout;
 
+	public FeedFragment() {
+
+	}
+
 	public FeedFragment(ArrayList<RssItem> items, FeedAdapter.ItemClickListener itemClickListener, SwipeRefreshLayout.OnRefreshListener refreshListener) {
 		this.items = items;
 		this.itemClickListener = itemClickListener;
