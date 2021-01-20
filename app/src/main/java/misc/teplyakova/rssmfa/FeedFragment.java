@@ -35,6 +35,7 @@ public class FeedFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		setRetainInstance(true);
 		View view = inflater.inflate(R.layout.feed, container, false);
 		rv = view.findViewById(R.id.recycler_view);
 		swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);

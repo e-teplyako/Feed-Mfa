@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 
@@ -36,8 +37,8 @@ public class FileUtils {
 		return "";
 	}
 
-	public static TreeMap<String, String> parseJson(String jsonString) {
-		TreeMap<String, String> result = new TreeMap<>();
+	public static HashMap<String, String> parseJson(String jsonString) {
+		HashMap<String, String> result = new HashMap<>();
 		try {
 			JSONObject jsonRootObject = new JSONObject(jsonString);
 			Iterator<String> iterator = jsonRootObject.keys();
