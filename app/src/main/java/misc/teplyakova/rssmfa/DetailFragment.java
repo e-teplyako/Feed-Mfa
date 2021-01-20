@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Layout;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class DetailFragment extends Fragment {
 		headline = result.findViewById(R.id.headline);
 		date = result.findViewById(R.id.date);
 		description = result.findViewById(R.id.description);
+		description.setMovementMethod(LinkMovementMethod.getInstance());
 		openLink = result.findViewById(R.id.open_link);
 		return result;
 	}
