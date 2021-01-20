@@ -8,7 +8,11 @@ import androidx.appcompat.app.ActionBar;import androidx.appcompat.app.AppCompatA
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
-import java.util.Map;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class PreferenceActivity extends AppCompatActivity {
 
@@ -55,11 +59,13 @@ public class PreferenceActivity extends AppCompatActivity {
 
 		private void populateList(PreferenceCategory parent) {
 			SharedPreferences prefs = getActivity().getSharedPreferences(PREFERENCES_COUNTRIES_SUBS, 0);
-			for (String key : prefs.getAll().keySet()) {
+			List<String> countries = new ArrayList<>(prefs.getAll().keySet());
+			Collections.sort(countries);
+			for (String country : countries) {
 				SwitchPreference switchPreference = new SwitchPreference(this.getContext());
-				switchPreference.setKey(key);
-				switchPreference.setChecked(prefs.getBoolean(key, false));
-				int stringId = getResources().getIdentifier(key, "string", getActivity().getPackageName());
+				switchPreference.setKey(country);
+				switchPreference.setChecked(prefs.getBoolean(country, false));
+				int stringId = getResources().getIdentifier(country, "string", getActivity().getPackageName());
 				switchPreference.setTitle(getResources().getString(stringId));
 				parent.addPreference(switchPreference);
 			}
